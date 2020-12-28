@@ -12,16 +12,72 @@ class CalculatorApp extends StatefulWidget {
 }
 
 class CalculatorAppState extends State<CalculatorApp> {
-  double operand1 = 0.0;
-  double operand2 = 0.0;
-  //String operation;
+  String operand1 = "";
+  String operand2 = "";
+  String operation = "";
   String calculation = "0";
 
+   String calculate(String operand1, String operand2, String operation) {
+    double a = double.parse(operand1);
+    double b = double.parse(operand2);
+    
+    switch(operation) {
+      case "+":
+        return (a + b).toString();
+      case "-":
+        return (a - b).toString();
+      case "*":
+        return (a * b).toString();
+      case "/":
+        return b != 0 ? (a / b).toString() : "0";
+      default:
+        return "";
+    }
+  }
+  
   void onPressOfButton(String text) {
     //Por hacer
-
+ if ("0123456789".contains(text)){ //es número
+      setState((){
+        if(operation != ""){ //ya se seleccionó el primer operando
+          operand2 += text;
+          calculation += text;
+        }else{ // no se ha seleccionado el primer operando
+          operand1 += text;
+          calculation = operand1;
+        }
+      });
+      
+    } else if ("+-*/".contains(text)) { //es operador
+      setState((){
+        if(operand2 != ""){ // ya se seleccionaron los dos operandos
+          operand1 = calculate(operand1, operand2, operation);
+          operand2 = "";
+        }else if(operand1 == "") { //no se ha seleccionado el primer operador
+          operand1 = "0";
+        }
+        operation = text;
+        calculation = operand1 + text;
+      });
+     
+    } else if (text == "C") { //borrar
+        setState((){
+          calculation = "0";
+          operand1 = "";
+          operand2 = "";
+          operation = "";
+        });
+      
+    } else { //igual
+      setState((){
+        calculation = calculate(operand1, operand2, operation);
+        operand1 = calculation; 
+        operand2 = "";
+      }); 
+    } 
+    
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +86,7 @@ class CalculatorAppState extends State<CalculatorApp> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(16),
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Text(calculation, style: TextStyle(fontSize: 30)),
@@ -78,7 +134,7 @@ class CalculatorAppState extends State<CalculatorApp> {
                       padding: EdgeInsets.all(2.0),
                       child: RaisedButton(
                         child: Text(
-                          ".",
+                          "%",
                           style: TextStyle(color: Colors.white),
                         ),
                         color: Colors.black,
@@ -87,151 +143,7 @@ class CalculatorAppState extends State<CalculatorApp> {
 
 
                 ]),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  //Componente boton
-                  Container(
-                      padding: EdgeInsets.all(2.0),
-                      child: RaisedButton(
-                        child: Text(
-                          "6",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        color: Colors.red,
-                  onPressed: () {},
-                      )),
-                  //Componente boton
-                  Container(
-                      padding: EdgeInsets.all(2.0),
-                      child: RaisedButton(
-                        child: Text(
-                          "5",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        color: Colors.red,
-                  onPressed: () {},
-                      )),
-                  //Componente boton
-                  Container(
-                      padding: EdgeInsets.all(2.0),
-                      child: RaisedButton(
-                        child: Text(
-                          "4",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        color: Colors.red,
-                  onPressed: () {},
-                      )),
-                  //Componente boton
-                  Container(
-                      padding: EdgeInsets.all(2.0),
-                      child: RaisedButton(
-                        child: Text(
-                          "C",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        color: Colors.black,
-                  onPressed: () {},
-                      )),
-              ]),
-          Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  //Componente boton
-                  Container(
-                      padding: EdgeInsets.all(2.0),
-                      child: RaisedButton(
-                        child: Text(
-                          "3",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        color: Colors.red,
-                  onPressed: () {},
-                      )),
-                  //Componente boton
-                  Container(
-                      padding: EdgeInsets.all(2.0),
-                      child: RaisedButton(
-                        child: Text(
-                          "2",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        color: Colors.red,
-                  onPressed: () {},
-                      )),
-                  //Componente boton
-                  Container(
-                      padding: EdgeInsets.all(2.0),
-                      child: RaisedButton(
-                        child: Text(
-                          "1",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        color: Colors.red,
-                  onPressed: () {},
-                      )),
-                  //Componente boton
-                  Container(
-                      padding: EdgeInsets.all(2.0),
-                      child: RaisedButton(
-                        child: Text(
-                          "0",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        color: Colors.red,
-                  onPressed: () {},
-                      )),
-                  ]),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  //Componente boton
-                  Container(
-                      padding: EdgeInsets.all(2.0),
-                      child: RaisedButton(
-                        child: Text(
-                          "-",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        color: Colors.green,
-                  onPressed: () {},
-                      )),
-                  //Componente boton
-                  Container(
-                      padding: EdgeInsets.all(2.0),
-                      child: RaisedButton(
-                        child: Text(
-                          "+",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        color: Colors.green,
-                  onPressed: () {},
-                      )),
-                  //Componente boton
-                  Container(
-                      padding: EdgeInsets.all(2.0),
-                      child: RaisedButton(
-                        child: Text(
-                          "/",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        color: Colors.green,
-                  onPressed: () {},
-                      )),
-                  //Componente boton
-                  Container(
-                      padding: EdgeInsets.all(2.0),
-                      child: RaisedButton(
-                        child: Text(
-                          "*",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        color: Colors.green,
-                  onPressed: () {},
-                      )),
-                  ]),
-            
+
           ],
         ),
       ),
