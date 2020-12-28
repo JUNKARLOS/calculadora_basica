@@ -1,0 +1,167 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(
+    home: CalculatorApp(),
+  ));
+}
+
+class CalculatorApp extends StatefulWidget {
+  @override
+  CalculatorAppState createState() => CalculatorAppState();
+}
+
+class CalculatorAppState extends State<CalculatorApp> {
+  double operand1 = 0.0;
+  double operand2 = 0.0;
+  String operation;
+  String calculation = "0";
+
+  void onPressOfButton(String text) {
+    //Por hacer
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Card(
+        child: Material(
+          color: Colors.black,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(calculation,
+                        style: TextStyle(color: Colors.white, fontSize: 48)),
+                  )),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    CalcButton(
+                        txt: "7",
+                        callback: () {
+                          onPressOfButton("7");
+                        }),
+                    CalcButton(
+                        txt: "8",
+                        callback: () {
+                          onPressOfButton("8");
+                        }),
+                    CalcButton(
+                        txt: "9",
+                        callback: () {
+                          onPressOfButton("9");
+                        }),
+                    CalcButton(
+                        txt: "/",
+                        callback: () {
+                          onPressOfButton("/");
+                        }),
+                  ]),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    CalcButton(
+                        txt: "4",
+                        callback: () {
+                          onPressOfButton("4");
+                        }),
+                    CalcButton(
+                        txt: "5",
+                        callback: () {
+                          onPressOfButton("5");
+                        }),
+                    CalcButton(
+                        txt: "6",
+                        callback: () {
+                          onPressOfButton("6");
+                        }),
+                    CalcButton(
+                        txt: "x",
+                        callback: () {
+                          onPressOfButton("x");
+                        }),
+                  ]),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    CalcButton(
+                        txt: "1",
+                        callback: () {
+                          onPressOfButton("1");
+                        }),
+                    CalcButton(
+                        txt: "2",
+                        callback: () {
+                          onPressOfButton("2");
+                        }),
+                    CalcButton(
+                        txt: "3",
+                        callback: () {
+                          onPressOfButton("3");
+                        }),
+                    CalcButton(
+                        txt: "-",
+                        callback: () {
+                          onPressOfButton("-");
+                        }),
+                  ]),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    CalcButton(
+                        txt: "C",
+                        callback: () {
+                          onPressOfButton("C");
+                        }),
+                    CalcButton(
+                        txt: "0",
+                        callback: () {
+                          onPressOfButton("0");
+                        }),
+                    CalcButton(
+                        txt: "=",
+                        callback: () {
+                          onPressOfButton("=");
+                        }),
+                    CalcButton(
+                        txt: "+",
+                        callback: () {
+                          onPressOfButton("+");
+                        }),
+                  ]),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CalcButton extends StatelessWidget {
+  final Function callback;
+  final String txt;
+
+  const CalcButton({Key key, @required this.txt, @required this.callback})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        height: 120,
+        width: 195,
+        padding: EdgeInsets.all(2.0),
+        child: RaisedButton(
+          child: Text(
+            this.txt,
+            style: TextStyle(color: Colors.black, fontSize: 40),
+          ),
+          color: Colors.white,
+          onPressed: this.callback,
+        ));
+  }
+}
