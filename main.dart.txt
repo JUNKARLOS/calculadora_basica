@@ -1,0 +1,32 @@
+  void onPressOfButton(String text) {
+    if (text == "C") {
+      calculation = "0";
+      operand1 = 0;
+      operand2 = 0; //Borra los valores de los operandos 1 y 2 y del resultado
+    } else if (text == "/" || text == "+" || text == "-" || text == "x") {
+      operand1 = double.parse(calculation); //Toma los valores del operando1
+      calculation = "";
+      operation = text;
+    } else if (text == "=") {
+      operand2 = double.parse(calculation); //Toma los valores del operando2
+      if (operation == "/") {
+        calculation = (operand1 / operand2).toString(); //Realiza la division
+      }
+      if (operation == "x") {
+        calculation =
+            (operand1 * operand2).toString(); //Realiza la multiplicación
+      }
+      if (operation == "-") {
+        calculation = (operand1 - operand2).toString(); //Realiza la resta
+      }
+      if (operation == "+") {
+        calculation = (operand1 + operand2).toString(); //Realiza la suma
+      }
+    } else {
+      calculation = int.parse(calculation + text)
+          .toString(); //Concatena los números del operando1 y 2
+    }
+    setState(() {
+      text = calculation;
+    });
+  }
